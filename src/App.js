@@ -10,7 +10,7 @@ function App() {
         <Provider store={store}>
             <Container maxWidth="md">
                 <Typography variant="h4" style={{textAlign: 'center', margin: '3rem'}}>Hacker News Topstories</Typography>
-                {/* <NewsList /> */}
+                <NewsList />
                 <Task2 />
             </Container>
         </Provider>

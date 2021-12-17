@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { fetchStories, loadTopstories, paginationAmount, SetEndStoryIndexAction } from '../state/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import NewsListEntry from './NewsListEntry';
 import { Container, Button } from '@mui/material';
+import { filterStoriesForRender } from '../state/selectors';
 
 
 function NewsList() {
     const dispatch = useDispatch();
     const {storiesIds, stories , endStoryIndex} = useSelector(state => state);
-    const [storiesToRender, setStoriesToRender] = useState(stories.slice(endStoryIndex - paginationAmount, endStoryIndex))
-    
+    const storiesToRender = useSelector((state) => filterStoriesForRender(state, endStoryIndex - paginationAmount, endStoryIndex))
 
     useEffect(() => {
         async function setInitialState(){
@@ -17,10 +17,6 @@ function NewsList() {
         }
         setInitialState()
     } , [])
-
-    useEffect(() => {
-        setStoriesToRender(stories.slice(endStoryIndex - paginationAmount, endStoryIndex))
-    }, [endStoryIndex, stories])
 
 
     async function incrementPage(){
